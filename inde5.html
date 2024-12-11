@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Handling</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Handling Example</h1>
+    <div>
+        <button id="mouseButton">Click Me (Mouse Event)</button>
+        <p class="output" id="mouseOutput"></p>
+    </div>
+    <div>
+        <input type="text" id="keyboardInput" placeholder="Type something..." />
+        <p class="output" id="keyboardOutput"></p>
+    </div>
+    <div>
+        <form id="myForm">
+            <input type="text" id="name" placeholder="Enter your name" required />
+            <button type="submit">Submit (Form Event)</button>
+        </form>
+        <p class="output" id="formOutput"></p>
+    </div>
+    <script>
+        const mouseButton = document.getElementById('mouseButton');
+        const mouseOutput = document.getElementById('mouseOutput');
+        mouseButton.addEventListener('click', function() {
+            mouseOutput.textContent = 'Button clicked! (Mouse Event)';
+        });
+
+        const keyboardInput = document.getElementById('keyboardInput');
+        const keyboardOutput = document.getElementById('keyboardOutput');
+        keyboardInput.addEventListener('keydown', function(event) {
+            keyboardOutput.textContent = `Key pressed: ${event.key}`;
+        });
+
+        const form = document.getElementById('myForm');
+        const formOutput = document.getElementById('formOutput');
+        const nameInput = document.getElementById('name');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            formOutput.textContent = `Form submitted! Hello, ${nameInput.value}`;
+        });
+    </script>
+</body>
+</html>

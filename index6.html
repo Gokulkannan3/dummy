@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Replace and Remove HTML Elements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Replace and Remove HTML Elements</h1>
+
+    <div id="content">
+        <p id="text1">This is the first paragraph.</p>
+        <p id="text2">This is the second paragraph.</p>
+    </div>
+
+    <div>
+        <button onclick="replaceElement()">Replace First Paragraph</button>
+        <button onclick="removeElement()">Remove Second Paragraph</button>
+    </div>
+
+    <script>
+        function replaceElement() {
+            const newElement = document.createElement('p');
+            newElement.textContent = 'This is the new first paragraph (replaced).';
+            const oldElement = document.getElementById('text1');
+            oldElement.replaceWith(newElement);
+        }
+
+        function removeElement() {
+            const elementToRemove = document.getElementById('text2');
+            elementToRemove.remove();
+        }
+    </script>
+</body>
+</html>

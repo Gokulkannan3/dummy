@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find by Content and Change</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Original Header</h1>
+    <p>This is the original paragraph content.</p>
+    <p>Another paragraph with different content.</p>
+
+    <div>
+        <input placeholder="Enter text to find" class="find-text">
+        <input placeholder="Enter new content" class="new-content">
+        <button onclick="findAndChangeContent()">Change Content</button>
+        <p class="error"></p>
+    </div>
+
+    <script>
+        function findAndChangeContent() {
+            const findText = document.querySelector(".find-text").value.trim();
+            const newContent = document.querySelector(".new-content").value.trim();
+            const error = document.querySelector(".error");
+            error.textContent = "";
+
+            if (!findText || !newContent) {
+                error.textContent = "Both fields are required.";
+                return;
+            }
+
+            const elements = document.querySelectorAll("h1, p");
+            let found = false;
+
+            elements.forEach(element => {
+                if (element.textContent === findText) {
+                    element.textContent = newContent;
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                error.textContent = "Text not found.";
+            }
+        }
+    </script>
+</body>
+</html>

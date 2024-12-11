@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bank Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+        h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #34495e;
+        }
+        .dashboard {
+            text-align: center;
+        }
+        .dashboard select {
+            margin-bottom: 1rem;
+        }
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Online Bank Account</h1>
+    </header>
+    <main>
+        <div class="container" id="loginForm">
+            <h2>Login</h2>
+            <form onsubmit="return validateLogin()">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" placeholder="Enter your email">
+                <span class="error" id="loginEmailError"></span>
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password">
+                <span class="error" id="loginPasswordError"></span>
+                <button type="submit">Login</button>
+                <p>Don't have an account? <a href="#" onclick="showRegistrationForm()">Register here</a>.</p>
+            </form>
+        </div>
+
+        <div class="container hidden" id="registrationForm">
+            <h2>Register</h2>
+            <form onsubmit="return validateRegistration()">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" placeholder="Enter your name">
+                <span class="error" id="nameError"></span>
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email">
+                <span class="error" id="emailError"></span>
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter your password">
+                <span class="error" id="passwordError"></span>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                <span class="error" id="confirmPasswordError"></span>
+                <button type="submit">Register</button>
+                <p>Already have an account? <a href="#" onclick="showLoginForm()">Login here</a>.</p>
+            </form>
+        </div>
+
+        <div class="container hidden" id="dashboard">
+            <h2>Welcome to the Dashboard</h2>
+            <div class="dashboard">
+                <label for="actions">Choose an action:</label>
+                <select id="actions">
+                    <option value="viewBalance">View Balance</option>
+                    <option value="transferMoney">Transfer Money</option>
+                    <option value="transactionHistory">Transaction History</option>
+                </select>
+                <button onclick="performAction()">Submit</button>
+                <p id="actionResult"></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showLoginForm() {
+            document.getElementById("loginForm").classList.remove("hidden");
+            document.getElementById("registrationForm").classList.add("hidden");
+            document.getElementById("dashboard").classList.add("hidden");
+        }
+
+        function showRegistrationForm() {
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("registrationForm").classList.remove("hidden");
+            document.getElementById("dashboard").classList.add("hidden");
+        }
+
+        function validateLogin() {
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value.trim();
+            let isValid = true;
+
+            document.getElementById("loginEmailError").textContent = "";
+            document.getElementById("loginPasswordError").textContent = "";
+
+            if (!email) {
+                document.getElementById("loginEmailError").textContent = "Email is required.";
+                isValid = false;
+            }
+            if (!password) {
+                document.getElementById("loginPasswordError").textContent = "Password is required.";
+                isValid = false;
+            }
+
+            if (isValid) {
+                document.getElementById("loginForm").classList.add("hidden");
+                document.getElementById("dashboard").classList.remove("hidden");
+            }
+            return false;
+        }
+
+        function validateRegistration() {
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
+            let isValid = true;
+
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("confirmPasswordError").textContent = "";
+
+            if (!name) {
+                document.getElementById("nameError").textContent = "Name is required.";
+                isValid = false;
+            }
+            if (!email) {
+                document.getElementById("emailError").textContent = "Email is required.";
+                isValid = false;
+            }
+            if (!password) {
+                document.getElementById("passwordError").textContent = "Password is required.";
+                isValid = false;
+            }
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert("Registration successful! Please log in.");
+                showLoginForm();
+            }
+            return false;
+        }
+
+        function performAction() {
+            const action = document.getElementById("actions").value;
+            let result = "";
+
+            switch (action) {
+                case "viewBalance":
+                    result = "Your balance is $5,000.";
+                    break;
+                case "transferMoney":
+                    result = "Transfer functionality is under development.";
+                    break;
+                case "transactionHistory":
+                    result = "No recent transactions.";
+                    break;
+                default:
+                    result = "Invalid action.";
+            }
+
+            document.getElementById("actionResult").textContent = result;
+        }
+    </script>
+</body>
+</html>
